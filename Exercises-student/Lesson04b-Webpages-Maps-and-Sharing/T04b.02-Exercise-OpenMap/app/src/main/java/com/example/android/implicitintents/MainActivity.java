@@ -22,6 +22,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -48,12 +50,22 @@ public class MainActivity extends AppCompatActivity {
      * @param v Button that was clicked.
      */
     public void onClickOpenAddressButton(View v) {
-        // TODO (5) Store an address in a String
+        // done (5) Store an address in a String
+        String address ="Vallikavu PO, Amritapuri, Clappana, Kerala 690525";
 
-        // TODO (6) Use Uri.Builder with the appropriate scheme and query to form the Uri for the address
-
-        // TODO (7) Replace the Toast with a call to showMap, passing in the Uri from the previous step
-        Toast.makeText(this, "TODO: Open a map when this button is clicked", Toast.LENGTH_SHORT).show();
+        // done  (6) Use Uri.Builder with the appropriate scheme and query to form the Uri for the address
+        Uri.Builder build = new Uri.Builder();
+        build.scheme("geo")
+                .path("0,0")
+                 .query(address);
+        Uri addressu = build.build();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(addressu);
+        if (intent.resolveActivity(getPackageManager())!=null){
+            startActivity(intent);
+        }
+        // done (7) Replace the Toast with a call to showMap, passing in the Uri from the previous step
+ showMap(addressu);
     }
 
     /**
@@ -112,13 +124,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // TODO (1) Create a method called showMap with a Uri as the single parameter
+    // done (1) Create a method called showMap with a Uri as the single parameter
     // Do steps 2 - 4 within the showMap method
-        // TODO (2) Create an Intent with action type, Intent.ACTION_VIEW
+        // done (2) Create an Intent with action type, Intent.ACTION_VIEW
 
-        // TODO (3) Set the data of the Intent to the Uri passed into this method
+        // done (3) Set the data of the Intent to the Uri passed into this method
 
-        // TODO (4) Verify that this Intent can be launched and then call startActivity
+        // done (4) Verify that this Intent can be launched and then call startActivity
 
-
+      public void showMap(Uri map){
+        Intent forMap = new Intent(Intent.ACTION_VIEW);
+                forMap.setData(map);
+        if(forMap.resolveActivity(getPackageManager())!=null){
+            startActivity(forMap);
+        }
+      }
 }
